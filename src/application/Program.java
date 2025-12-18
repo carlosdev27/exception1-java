@@ -25,9 +25,9 @@ public class Program {
 		out.print("Check-out date (dd/MM/yyyy): ");
 		Date checkOut = sdf.parse(sc.next());
 		
-		// 1. PRIMEIRA VALIDAÇÃO: Check-out após Check-in
+		
 		if(!checkOut.after(checkIn)) {
-			out.println("Error in reservation: Check-out date must be after check-in date"); // Usar println
+			out.println("Error in reservation: Check-out date must be after check-in date"); 
 		}
 		else {
 			Reservation reservation = new Reservation(number, checkIn, checkOut);
@@ -35,28 +35,22 @@ public class Program {
 			
 			out.println();
 			out.println("Enter data to update the reservation: ");
-			out.print("Check-in date (dd/MM/yyyy): "); // Adicionado print
+			out.print("Check-in date (dd/MM/yyyy): "); 
 			
 			checkIn = sdf.parse(sc.next());
-			out.print("Check-out date (dd/MM/yyyy): "); // Adicionado print
+			out.print("Check-out date (dd/MM/yyyy): "); 
 			checkOut = sdf.parse(sc.next());
+									
 			
-			Date now = new Date();
-			
-			// 2. SEGUNDA VALIDAÇÃO: Datas futuras
-			if(checkIn.before(now) || checkOut.before(now)) {
-				out.println("Error in reservation: Reservation dates for update must be future dates!");
-			}
-			// 3. TERCEIRA VALIDAÇÃO: Check-out após Check-in (Novas datas)
-			else if(!checkOut.after(checkIn)) {
-				// ESTE ERA O BLOCO VAZIO
-				out.println("Error in reservation: Check-out date must be after check-in date");
-			}
-			else {
-				// Somente se TODAS as validações passarem, a atualização é feita.
-				reservation.updateDates(checkIn, checkOut);
-				out.println("Reservation updated: " + reservation);
-			}
+			String error = reservation.updateDates (checkIn, checkOut);
+				
+			if(error != null) {
+				out.println("Error in reservation: "+ error);
+				}
+				else {
+					out.println("Reservation updated: " + reservation);
+				}
+				
 		}
 		
 		sc.close();
